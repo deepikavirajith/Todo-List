@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Input, Button, Form } from "reactstrap";
+import { Input, Button, Form, FormGroup } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
+import UpdateComponent from "./UpdateComponent";
 
 class ToDoList extends Component {
   constructor(props) {
@@ -9,20 +10,20 @@ class ToDoList extends Component {
     this.state = {
       itemsList: [],
       inputData: "",
+      editInput: ""
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.getItem = this.getItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
-   
   }
 
   handleOnChange(event) {
+    event.preventDefault();
     this.setState({
       inputData: event.target.value,
     });
-    event.preventDefault();
   }
 
   getItem() {
@@ -49,9 +50,7 @@ class ToDoList extends Component {
       try {
         axios.post(baseUrl, { title: this.state.inputData }).then((res) => {
           console.log(this.state.inputData);
-          const items = [...this.state.itemsList.id];
           this.setState({
-            itemsList: items,
             inputData: "",
           });
           this.getItem();
@@ -86,44 +85,52 @@ class ToDoList extends Component {
         .then((res) => {
           console.log(val);
           const items = this.state.itemsList;
-          this.setState({
-            itemsList: items.filter((item) => item.id !== id),
-            inputData:val,
+          items.map((item) => {
+            if (item.id === id) {
+              item.title = val;
+            }
           });
-          console.log(items);
-          console.log(val);
+          this.setState({
+            itemsList: items
+          });
         });
     } catch (err) {
       console.log(err);
     }
   }
-  
 
   render() {
     return (
-      <div className="Todo">
-          <Form id="todo-list" onSubmit={this.addItem} className="m-1">
+      <div className="container-fluid">
+        
+          <Form id="todo-list" onSubmit={this.addItem}>
+          <div className="form-group row">
             <Input
+              className="input col-12 col-sm-6"
               type="text"
               name="name"
               value={this.state.inputData}
               placeholder="Add Item"
               onChange={this.handleOnChange}
             ></Input>
-            <Button
-              type="submit"
-              className="m-2"
-              color="primary"
-            >
+            <Button className="btn-add col-12 col-sm-2" type="submit">
               Add
             </Button>
-          </Form>
-            {this.state.itemsList.map((todo) => (
-               <div key={todo.id} className="card">
-               <div className="container">
-                 <p>
-                   {todo.title}
-                   <div>
+            </div>
+          </Form> 
+        
+        <div className="form-group row">
+          <UpdateComponent
+            itemsList={this.state.itemsList}
+            editInput={this.state.editInput}
+            deleteItem={this.deleteItem}
+            updateItem={this.updateItem}
+          />
+        </div>
+      </div>
+    );
+  }
+  /*<div>
                      <button
                        className="fa fa-trash fa-lg"
                        onClick={() => this.deleteItem(todo.id)
@@ -140,33 +147,6 @@ class ToDoList extends Component {
                      >
                        Edit
                      </button>
-                   </div>
-                 </p>
-               </div>
-             </div>
-           ))}
-            </div>
-            /*<li key={todo.id}>
-                {todo.title}
-                <span
-                  className="fa fa-trash fa-lg"
-                  onClick={() => {
-                    this.deleteItem(todo.id);
-                  }}
-                ></span>
-                <span
-                  className="fa fa-edit fa-lg"
-                  onClick={() => {
-                    this.updateItem(todo.id, todo.title);
-                    console.log(this.updateItem(todo.id, todo.title));
-                  }}
-                ></span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>*/
-    );
-  }
+                   </div>*/
 }
 export default ToDoList;
