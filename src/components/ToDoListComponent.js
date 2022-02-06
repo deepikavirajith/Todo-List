@@ -84,11 +84,11 @@ class ToDoList extends Component {
         .patch(`http://localhost:3001/data/${id}`, { title: val })
         .then((res) => {
           console.log(val);
-          const items = this.state.itemsList;
-          items.map((item) => {
+          const items = this.state.itemsList.map((item) => {
             if (item.id === id) {
               item.title = val;
             }
+            return item;
           });
           this.setState({
             itemsList: items
@@ -102,7 +102,7 @@ class ToDoList extends Component {
   render() {
     return (
       <div className="container-fluid">
-        
+
           <Form id="todo-list" onSubmit={this.addItem}>
           <div className="form-group row">
             <Input
@@ -117,8 +117,8 @@ class ToDoList extends Component {
               Add
             </Button>
             </div>
-          </Form> 
-        
+          </Form>
+
         <div className="form-group row">
           <UpdateComponent
             itemsList={this.state.itemsList}
@@ -135,7 +135,7 @@ class ToDoList extends Component {
                        className="fa fa-trash fa-lg"
                        onClick={() => this.deleteItem(todo.id)
                       }
-                       
+
                      >
                        Delete
                      </button>
