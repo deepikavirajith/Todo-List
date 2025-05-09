@@ -6,7 +6,7 @@ class Header extends Component {
     return (
       <Navbar>
         <div className="container-fluid">
-          <h3 className="mx-auto">Notes</h3>
+          <h3 className="mx-auto"></h3>
         </div>
       </Navbar>
     )

@@ -1,14 +1,21 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 import { Input, Button, Form, FormGroup } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
 import UpdateComponent from "./UpdateComponent";
+=======
+import axios from "axios";
+import { baseUrl } from "./baseUrl";
+import EditComponent from "./EditComponent";
+>>>>>>> 3cbb44c (updated-css)
 
 class ToDoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       itemsList: [],
+<<<<<<< HEAD
       inputData: "",
       editInput: ""
     };
@@ -27,14 +34,16 @@ class ToDoList extends Component {
   }
 
   getItem() {
+=======
+      editingId: null, // Track which item is being edited
+    };
+  }
+
+  async getItem() {
+>>>>>>> 3cbb44c (updated-css)
     try {
-      axios.get(baseUrl).then((response) => {
-        console.log(response.data);
-        this.setState({
-          itemsList: response.data,
-        });
-        console.log(this.state.itemsList);
-      });
+      const response = await axios.get(baseUrl);
+      this.setState({ itemsList: response.data });
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +53,7 @@ class ToDoList extends Component {
     this.getItem();
   }
 
+<<<<<<< HEAD
   addItem(event) {
     event.preventDefault();
     if (this.state.inputData !== "") {
@@ -62,22 +72,23 @@ class ToDoList extends Component {
   }
 
   deleteItem(id) {
+=======
+  async deleteItem(id) {
+>>>>>>> 3cbb44c (updated-css)
     try {
-      axios.delete(`http://localhost:3001/data/${id}`).then((res) => {
-        const currentTaskArray = [...this.state.itemsList];
-        const taskAfterDeleted = currentTaskArray.filter(
-          (deleteItem) => deleteItem.id !== id
-        );
-        this.setState({
-          itemsList: taskAfterDeleted,
-        });
-        this.getItem();
-      });
+      await axios.delete(`http://localhost:3001/data/${id}`);
+      // Option 1: Refetch items from server
+      this.getItem();
+      // Option 2: Update state locally (uncomment if you prefer this)
+      // this.setState({
+      //   itemsList: this.state.itemsList.filter((item) => item.id !== id),
+      // });
     } catch (err) {
       console.log(err);
     }
   }
 
+<<<<<<< HEAD
   updateItem(id, val) {
     try {
       axios
@@ -97,10 +108,15 @@ class ToDoList extends Component {
     } catch (err) {
       console.log(err);
     }
+=======
+  handleEdit(id) {
+    this.setState({ editingId: id });
+>>>>>>> 3cbb44c (updated-css)
   }
 
   render() {
     return (
+<<<<<<< HEAD
       <div className="container-fluid">
         
           <Form id="todo-list" onSubmit={this.addItem}>
@@ -148,5 +164,35 @@ class ToDoList extends Component {
                        Edit
                      </button>
                    </div>*/
+=======
+      <ul>
+        {this.state.itemsList.map((item) => (
+          <li key={item.id}>
+            {item.title}
+            <span
+              className="fa fa-trash fa-lg"
+              onClick={() => this.deleteItem(item.id)}
+              style={{ cursor: "pointer", marginLeft: "10px" }}
+            ></span>
+            <span
+              className="fa fa-edit fa-lg"
+              onClick={() => this.handleEdit(item.id)}
+              style={{ cursor: "pointer", marginLeft: "10px" }}
+            ></span>
+            {/* Render EditComponent conditionally */}
+            {this.state.editingId === item.id && (
+              <EditComponent
+                item={item}
+                onClose={() => this.setState({ editingId: null })}
+                // Pass other props as needed
+              />
+            )}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+>>>>>>> 3cbb44c (updated-css)
 }
+
 export default ToDoList;
