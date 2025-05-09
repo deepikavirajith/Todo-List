@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-body{
-  background-color: #f87676;
-=======
 .Todo {
   max-width: 500px;
   margin: 40px auto;
@@ -110,62 +106,4 @@ body{
     font-size: 14px;
     padding: 8px 6px;
   }
->>>>>>> 3cbb44c (updated-css)
 }
-
-button{
-  color: black;
-  min-width: 48px;
-  min-height: 48px;
-  font-style: bold;
-  margin: 5px;
-  background: transparent;
-}
-
-.btn-add{
-  color: black;
-  font-size: 1.5em;
-  font-style: bold;
-  margin: 0 0 2px 2px;
-  background-color: rgb(209, 80, 248);
-
-}
-
-.input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid rgb(248, 243, 243);
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-::placeholder{
-  font-size: 1.5em;
-}
-
-.form-group {
-  margin: auto;
-  text-align: center;
-}
-
-.editInput{
-  margin: 10px 0;
-  max-width: 80%;
-  font-size: 1.0em;
-  background-color: rgb(142, 252, 147);
-  border-style: ridge;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid rgb(248, 243, 243);
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-h5{
-  font-style: bold;
-}
-
-
-
