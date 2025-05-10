@@ -1,8 +1,6 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import axios from "axios";
-import { baseUrl } from "./baseUrl";
 import { Input, Button, Form, Label } from "reactstrap";
-import AddComponent from "./AddComponent";
 
 class EditComponent extends Component {
 

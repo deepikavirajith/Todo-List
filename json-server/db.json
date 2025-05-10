@@ -1,19 +1,11 @@
 {
   "data": [
     {
-<<<<<<< HEAD
-      "title": "milk",
-      "id": 9
-    },
-    {
-      "title": "Lakshmi Deepika",
-=======
       "title": "Lakshmi Deepika Dodda",
       "id": 8
     },
     {
-      "title": "santhi Virajith Garapati",
->>>>>>> 3cbb44c (updated-css)
+      "title": "santhi Virajith G",
       "id": 10
     }
   ]

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Input, Button, Form } from "reactstrap";
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
