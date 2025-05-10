@@ -1,60 +1,109 @@
-body{
-  background-color: #f87676;
+.Todo {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 24px;
 }
 
-button{
-  color: black;
-  min-width: 48px;
-  min-height: 48px;
-  font-style: bold;
-  margin: 5px;
-  background: transparent;
-}
-
-.btn-add{
-  color: black;
-  font-size: 1.5em;
-  font-style: bold;
-  margin: 0 0 2px 2px;
-  background-color: rgb(209, 80, 248);
-
-}
-
-.input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid rgb(248, 243, 243);
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-::placeholder{
-  font-size: 1.5em;
-}
-
-.form-group {
-  margin: auto;
+.Todo h2 {
   text-align: center;
+  color: #333;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
 }
 
-.editInput{
-  margin: 10px 0;
-  max-width: 80%;
-  font-size: 1.0em;
-  background-color: rgb(142, 252, 147);
-  border-style: ridge;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid rgb(248, 243, 243);
+#todo-list {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.titleInput {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.titleInput:focus {
+  border-color: #4f8cff;
+}
+
+#todo-list button {
+  padding: 10px 18px;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#todo-list button:hover {
+  background: #2563eb;
+}
+
+.container {
+  margin-top: 16px;
+}
+
+#tblTasks {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+#tblTasks td {
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 16px;
+  color: #333;
+  vertical-align: middle;
+}
+
+#btnEdit, #btnDelete {
+  padding: 6px 14px;
+  border: none;
   border-radius: 4px;
-  box-sizing: border-box;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: background 0.2s, color 0.2s;
 }
 
-h5{
-  font-style: bold;
+#btnEdit {
+  background: #facc15;
+  color: #333;
 }
 
+#btnEdit:hover {
+  background: #f59e42;
+  color: #fff;
+}
 
+#btnDelete {
+  background: #ef4444;
+  color: #fff;
+}
 
+#btnDelete:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 600px) {
+  .Todo {
+    padding: 16px 8px;
+  }
+  #tblTasks td {
+    font-size: 14px;
+    padding: 8px 6px;
+  }
+}

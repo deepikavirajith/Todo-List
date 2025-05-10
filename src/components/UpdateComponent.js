@@ -1,5 +1,3 @@
-import React from 'react';
-import FlipMove from 'react-flip-move';
 
 function UpdateComponent(props){
     const itemsList = props.itemsList;

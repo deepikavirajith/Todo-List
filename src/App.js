@@ -1,15 +1,13 @@
-import React, { Component, ReactDOM } from "react";
+import { Component } from "react";
 import './App.css';
-import Header from './components/HeaderComponent';
-import ToDoList from './components/ToDoListComponent';
+import TestComponent from "./components/TestComponent";
 
 
 class App extends Component {
   render(){
   return (
     <div className="App">
-    <Header />
-    <ToDoList />
+    <TestComponent />
     </div>
     
   );

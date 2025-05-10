@@ -1,40 +1,21 @@
-import React, { Component } from "react";
-import { Input, Button, Form, FormGroup } from "reactstrap";
+import { Component } from "react";
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
-import UpdateComponent from "./UpdateComponent";
+import EditComponent from "./EditComponent";
 
 class ToDoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       itemsList: [],
-      inputData: "",
-      editInput: ""
+      editingId: null, // Track which item is being edited
     };
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.getItem = this.getItem.bind(this);
-    this.updateItem = this.updateItem.bind(this);
   }
 
-  handleOnChange(event) {
-    event.preventDefault();
-    this.setState({
-      inputData: event.target.value,
-    });
-  }
-
-  getItem() {
+  async getItem() {
     try {
-      axios.get(baseUrl).then((response) => {
-        console.log(response.data);
-        this.setState({
-          itemsList: response.data,
-        });
-        console.log(this.state.itemsList);
-      });
+      const response = await axios.get(baseUrl);
+      this.setState({ itemsList: response.data });
     } catch (err) {
       console.log(err);
     }
@@ -44,109 +25,53 @@ class ToDoList extends Component {
     this.getItem();
   }
 
-  addItem(event) {
-    event.preventDefault();
-    if (this.state.inputData !== "") {
-      try {
-        axios.post(baseUrl, { title: this.state.inputData }).then((res) => {
-          console.log(this.state.inputData);
-          this.setState({
-            inputData: "",
-          });
-          this.getItem();
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }
-
-  deleteItem(id) {
+  async deleteItem(id) {
     try {
-      axios.delete(`http://localhost:3001/data/${id}`).then((res) => {
-        const currentTaskArray = [...this.state.itemsList];
-        const taskAfterDeleted = currentTaskArray.filter(
-          (deleteItem) => deleteItem.id !== id
-        );
-        this.setState({
-          itemsList: taskAfterDeleted,
-        });
-        this.getItem();
-      });
+      await axios.delete(`http://localhost:3001/data/${id}`);
+      // Option 1: Refetch items from server
+      this.getItem();
+      // Option 2: Update state locally (uncomment if you prefer this)
+      // this.setState({
+      //   itemsList: this.state.itemsList.filter((item) => item.id !== id),
+      // });
     } catch (err) {
       console.log(err);
     }
   }
 
-  updateItem(id, val) {
-    try {
-      axios
-        .patch(`http://localhost:3001/data/${id}`, { title: val })
-        .then((res) => {
-          console.log(val);
-          const items = this.state.itemsList;
-          items.map((item) => {
-            if (item.id === id) {
-              item.title = val;
-            }
-          });
-          this.setState({
-            itemsList: items
-          });
-        });
-    } catch (err) {
-      console.log(err);
-    }
+  handleEdit(id) {
+    this.setState({ editingId: id });
   }
 
   render() {
     return (
-      <div className="container-fluid">
-        
-          <Form id="todo-list" onSubmit={this.addItem}>
-          <div className="form-group row">
-            <Input
-              className="input col-12 col-sm-6"
-              type="text"
-              name="name"
-              value={this.state.inputData}
-              placeholder="Add Item"
-              onChange={this.handleOnChange}
-            ></Input>
-            <Button className="btn-add col-12 col-sm-2" type="submit">
-              Add
-            </Button>
-            </div>
-          </Form> 
-        
-        <div className="form-group row">
-          <UpdateComponent
-            itemsList={this.state.itemsList}
-            editInput={this.state.editInput}
-            deleteItem={this.deleteItem}
-            updateItem={this.updateItem}
-          />
-        </div>
-      </div>
+      <ul>
+        {this.state.itemsList.map((item) => (
+          <li key={item.id}>
+            {item.title}
+            <span
+              className="fa fa-trash fa-lg"
+              onClick={() => this.deleteItem(item.id)}
+              style={{ cursor: "pointer", marginLeft: "10px" }}
+            ></span>
+            <span
+              className="fa fa-edit fa-lg"
+              onClick={() => this.handleEdit(item.id)}
+              style={{ cursor: "pointer", marginLeft: "10px" }}
+            ></span>
+            {/* Render EditComponent conditionally */}
+            {this.state.editingId === item.id && (
+              <EditComponent
+                item={item}
+                onClose={() => this.setState({ editingId: null })}
+                // Pass other props as needed
+              />
+            )}
+          </li>
+        ))}
+      </ul>
     );
   }
-  /*<div>
-                     <button
-                       className="fa fa-trash fa-lg"
-                       onClick={() => this.deleteItem(todo.id)
-                      }
-                       
-                     >
-                       Delete
-                     </button>
-                     <button
-                       className="fa fa-edit fa-lg"
-                       onClick={() =>
-                         this.updateItem(todo.id, todo.title)
-                       }
-                     >
-                       Edit
-                     </button>
-                   </div>*/
 }
+
 export default ToDoList;
